@@ -12,10 +12,10 @@ How to use
 ClamClock is an alarm clock and, like any other alarm clock, you can set both the time and the alarm. 
 
 ###To set the alarm:
-Hold down the rightmost push-button for 1 second (until the yellow Alarm LED starts blinking) then release to enter alarm-set mode. Set the alarm by using the left most push button to set the hours, and so on to the right for minutes and seconds. Once the desired time has been entered, press the leftmost (Alarm) push-button to return to regular time telling mode - notice that the yellow Alarm LED is now on, this means the alarm is set. To cancel setting the alarm, hold down the alarm button for longer than a second. 
+Hold down the rightmost push-button for 1 second (until the yellow Alarm LED starts blinking) then release to enter alarm-set mode. Set the alarm by using the left most push button to set the hours, and so on to the right for minutes and seconds. Once the desired time has been entered, press the rightmost (Alarm) push-button to return to regular time telling mode - notice that the yellow Alarm LED is now on, this means the alarm is set. To cancel setting the alarm, hold down the alarm button for longer than a second. 
 
 ###To set the time: 
-Hold down the rightmost push-button for 3 second (until the second's column of LEDs fully illuminates) then release to enter time-set mode. Now, the leftmost button will toggle through the hours and the middle-left button will toggle through minutes. The middle-right button will reset the seconds to zero and exit time set mode. This means that you should set the clock to be a minute ahead of the clock that it is being set against; then, when the other clock rolls over, press the middle-right button set the clock to your minute and hour settings and zero seconds. 
+Hold down the rightmost push-button for 3 second (until the second's column of LEDs fully illuminates) then release to enter time-set mode. Now, the leftmost button will toggle through the hours and the middle-left button will toggle through minutes. The middle-right button will reset the seconds to zero and exit time set mode. This means that you should set the clock to be a minute ahead of the clock that it is being set against; then, when the other clock rolls over, press the middle-right button set the clock to your minute and hour settings and zero out the seconds. 
 
 ###To toggle the alarm on/off: 
 Press the alarm button (rightmost) once for less than 1 second to switch the alarm between on and off. When the alarm is on the yellow alarm LED will be lit.

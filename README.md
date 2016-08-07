@@ -6,6 +6,8 @@ How to program
 
 The clock's program is run on an ATtiny88 chip. The chip can be programmed through the six pin breakout on the back of the clock using an ISP programmer - another arduino can also be used as an ISP to program it. You will also need the ATtiny-core firmware package and the RTC library for arduino in order to program the controler. Both of these are included in the git repository in the hardware and libraries folders respectively. The files inside these folders should be added to the coresponding hardware and libraries folders in your /Documents/Arduino directory (create these folders if they do not exist). Once you've done this, set up your Arduino IDE with the settings shown in the 'board_config.png'.
 
+![board_config.png](board_config.png)
+
 How to use
 ----------
 
@@ -28,6 +30,8 @@ How to read
 ClamClock is a binary clock - it counts in base 2 instead of base 10 (if this is foreign to you, you'll find a lot of info through google). Even without fully understanding binary, the clock is easy to read. A graphic explanation is included in the git repository under the namer 'how_to_read.png'.
 
 The clock keeps track of time in 24hr (military) time by default - this can be changed to a 12hr format.
+
+![how_to_read.png](how_to_read.png)
 
 How the clock works
 -------------------

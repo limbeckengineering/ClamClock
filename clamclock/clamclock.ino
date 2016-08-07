@@ -15,25 +15,6 @@
   Support necessary: ATtiny support, specifically for the ATtiny88
 
 
-  _snooze def
-
-  _don't blink debug LED for mode - instead light up seconds in time set and blink LED in alarm set
-
-  _time set from current time
-
-  _cycle modes as you hold down alarm button, not when release
-
-  _tap to toggle alarm, hold to enter each setting mode for different times
-
-  _alarm turns off with any button
-
-  hard alarm method? game? add columns?
-
-  code based alarm settings
-
-  find a way to switch to 12 hour time
-
-
 */
 
 /*
@@ -104,7 +85,7 @@ int secondButtonStatePrev = LOW;
 int alarmButtonStatePrev = LOW;
 
 //Flags for button presses. It is the responsibility of the handler to reset this state when it is
-//handling a press.
+//handling a press. youcan do this by calling resetAllButtons()
 //hour, minute, or second button pressed and released
 boolean hourButtonPressedReleased = false;
 boolean secondButtonPressedReleased = false;
@@ -247,6 +228,7 @@ void loop()
             updateShiftRegisters();
 
           } else if (alarmButtonHeldVeryLong) {
+            //We are toggling between 12 and 24 hour time
             hrLED = 255;
             minLED = 255;
             secLED = 255;
@@ -479,7 +461,6 @@ void alarmTriggered() {
     updateButtonStates();
 
     //burn cycles
-
     
     if (millis() - alarmTimer < 0) {
       break;
@@ -494,6 +475,7 @@ void alarmTriggered() {
 
   }
 
+  //reset buzzer
   analogWrite(BUZZER, 0);
 
 }

@@ -151,7 +151,7 @@ void setup()
   digitalWrite(OUTPUT_ENABLE, HIGH);
   digitalWrite(CLEAR, HIGH);
 
-  if (! RTC.isrunning()) {
+  if (!RTC.isrunning()) {
     //Serial.println("RTC is NOT running!");
     // following line sets the RTC to the date & time this sketch was compiled
     RTC.adjust(DateTime(F(__DATE__), F(__TIME__)));
@@ -344,6 +344,7 @@ void loop()
       }
       break;
     case SETUP:
+      //Nothing here at the moment - can add something here though
       state = CLOCK;
       break;
   }

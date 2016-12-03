@@ -117,7 +117,7 @@ int debugLEDState = LOW;
 int debugLEDTimer = 0;
 
 //This determines how long the alarm has been going on
-//TODO make the duration of the alarm setable
+int alarmLimit = 300000;
 int alarmTimer = 0;
 
 //determines if the alarm will turn on when the alarm time is reached
@@ -183,10 +183,10 @@ void loop()
       secLED = now.second();
 
       //Handle the possability of 12-hour time
-      if(twentyFourHourTime){
+      if (twentyFourHourTime) {
         updateShiftRegisters();
-      }else{
-        if(hrLED > 12){
+      } else {
+        if (hrLED > 12) {
           //if the hours are greater than 12, then subtract them from 12 and OR with 16 to light up the top LED.
           hrLED = (hrLED - 12) | 16;
         }
@@ -351,6 +351,8 @@ void loop()
 
   resetAllButtonStates();
 
+  //reset buzzer
+  digitalWrite(BUZZER, LOW);
 }
 
 //updates all three shift registers at the same time (seconds, minutes, hours)
@@ -451,18 +453,18 @@ void writeToDebugLED(int state) {
 //This will be called when the alarm is detected - runs the LEDs and the alarm buzzer
 void alarmTriggered() {
   alarmTimer = millis();
+  int flashTimer = millis();
   hrLED = 255;
   minLED = 255;
   secLED = 255;
   updateShiftRegisters();
-  analogWrite(BUZZER, 125);
+  digitalWrite(BUZZER, HIGH);
 
-  while (millis() - alarmTimer < 300000) {
+  while (millis() - alarmTimer < alarmLimit) {
     //update button states
     updateButtonStates();
 
-    //burn cycles
-    
+
     if (millis() - alarmTimer < 0) {
       break;
     }
@@ -477,6 +479,6 @@ void alarmTriggered() {
   }
 
   //reset buzzer
-  analogWrite(BUZZER, 0);
+  digitalWrite(BUZZER, LOW);
 
 }

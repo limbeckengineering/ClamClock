@@ -85,7 +85,7 @@ int secondButtonStatePrev = LOW;
 int alarmButtonStatePrev = LOW;
 
 //Flags for button presses. It is the responsibility of the handler to reset this state when it is
-//handling a press. youcan do this by calling resetAllButtons()
+//handling a press. You can do this by calling resetAllButtons()
 //hour, minute, or second button pressed and released
 boolean hourButtonPressedReleased = false;
 boolean secondButtonPressedReleased = false;
@@ -93,12 +93,16 @@ boolean minuteButtonPressedReleased = false;
 
 //alarm button depressed
 boolean alarmButtonPressed = false;
+
 //alarm button held for more than 1 second
 boolean alarmButtonHeld = false;
+
 //alarm button held for more than 3 seconds
 boolean alarmButtonHeldLong = false;
+
 //alarm button held for more than 5 seconds
 boolean alarmButtonHeldVeryLong = false;
+
 //alarm button released
 boolean alarmButtonReleased = false;
 
@@ -116,8 +120,10 @@ int debugLEDState = LOW;
 //Timer used to flash the debug LED
 int debugLEDTimer = 0;
 
-//This determines how long the alarm has been going on
+//This determines how long the alarm will play for
 int alarmLimit = 300000;
+
+//This keeps track of how long the alarm has been playing for
 int alarmTimer = 0;
 
 //determines if the alarm will turn on when the alarm time is reached
@@ -152,11 +158,11 @@ void setup()
   digitalWrite(CLEAR, HIGH);
 
   if (!RTC.isrunning()) {
-    //Serial.println("RTC is NOT running!");
     // following line sets the RTC to the date & time this sketch was compiled
     RTC.adjust(DateTime(F(__DATE__), F(__TIME__)));
+
     // This line sets the RTC with an explicit date & time, for example to set
-    // July 14, 2016 at 15:10 you would call:
+    // July 14, 2016 at 15:10:00 you would call:
     //RTC.adjust(DateTime(2016, 7, 14, 15,10,0));
   }
 
@@ -175,7 +181,10 @@ void loop()
   //update button states
   updateButtonStates();
 
+  //A switch on the state - decides what to do
   switch (state) {
+
+    //what to do in the CLOCK state
     case CLOCK:
       //Send time to shift registers
       hrLED = now.hour();
@@ -187,7 +196,7 @@ void loop()
         updateShiftRegisters();
       } else {
         if (hrLED > 12) {
-          //if the hours are greater than 12, then subtract them from 12 and OR with 16 to light up the top LED.
+          //if the hours are greater than 12, then subtract them from 12 and binary OR with 16 to light up the top LED.
           hrLED = (hrLED - 12) | 16;
         }
         updateShiftRegisters();
@@ -199,6 +208,7 @@ void loop()
         //run a loop which cycles through each mode we can enter and only transitions once the alarm button is released
         while (!alarmButtonReleased) {
           updateButtonStates();
+          
           if (alarmButtonHeld) {
             hrLED = 0;
             minLED = 0;
@@ -218,7 +228,7 @@ void loop()
             }
 
           } else if (alarmButtonHeldLong) {
-            //set the time from the current time
+            //Set the time from the current time but not seconds. Leave those blank cause we will be using the seconds button to set the time.
             adjHours = now.hour();
             adjMins = now.minute();
 
@@ -228,7 +238,7 @@ void loop()
             updateShiftRegisters();
 
           } else if (alarmButtonHeldVeryLong) {
-            //We are toggling between 12 and 24 hour time
+            //We are toggling between 12 and 24 hour time. Light up all the buttons to show that the change has been made.
             hrLED = 255;
             minLED = 255;
             secLED = 255;
@@ -243,6 +253,7 @@ void loop()
         } else if (alarmButtonHeldLong) {
           state = SET_TIME;
         } else if (alarmButtonHeldVeryLong) {
+          //toggle 24 hour time
           twentyFourHourTime = twentyFourHourTime == true ? false : true;
         } else {
           //toggle alarm
@@ -274,7 +285,7 @@ void loop()
         debugLEDTimer = 0;
       }
 
-      //Update selections
+      //Update selections if a button has been pressed
       adjHours += hourButtonPressedReleased ? 1 : 0;
       adjMins += minuteButtonPressedReleased ? 1 : 0;
       adjSecs += secondButtonPressedReleased ? 1 : 0;
@@ -308,7 +319,7 @@ void loop()
         adjSecs = 0;
         state = CLOCK;
 
-        //low because we did not or unset the alarm
+        //low because we did not (or unset) the alarm
         writeToDebugLED(LOW);
         alarmToggle = false;
       }
@@ -394,7 +405,7 @@ void updateButtonStates() {
     alarmButtonHeldVeryLong = false;
     alarmButtonReleased = false;
   }
-  //handle alarm button being held
+  //handle alarm button being held for certain lengths of time
   else if (alarmButtonState == HIGH && alarmButtonStatePrev == HIGH) {
     alarmButtonPressed = false;
     alarmButtonReleased = false;
